@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ayo1103&#39;s blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://ayo1103.com/"/>
+  <updated>2016-03-05T14:46:54.000Z</updated>
+  <id>http://ayo1103.com/</id>
+  
+  <author>
+    <name>林昌佑 | Bryan Lin (@ayo1103)</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UITableView Rounded Corner Content View</title>
+    <link href="http://ayo1103.com/2016/03/05/UITableView-Rounded-Corner-Content-View/"/>
+    <id>http://ayo1103.com/2016/03/05/UITableView-Rounded-Corner-Content-View/</id>
+    <published>2016-03-05T13:47:40.000Z</published>
+    <updated>2016-03-05T14:46:54.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;DemoRoundedContentView&quot;&gt;&lt;a href=&quot;#DemoRoundedContentView&quot; class=&quot;headerlink&quot; title=&quot;DemoRoundedContentView&quot;&gt;&lt;/a&gt;DemoRoundedContentView&lt;/h1&gt;&lt;p&gt;把 UITableView 的內容 ( View ) 做出圓角卡片的感覺&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/ayo1103/DemoRoundedContentView/raw/master/demo_rounded_content.gif&quot; alt=&quot;Alt Text&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;快速-Copy-Paste&quot;&gt;&lt;a href=&quot;#快速-Copy-Paste&quot; class=&quot;headerlink&quot; title=&quot;快速 Copy Paste&quot;&gt;&lt;/a&gt;快速 Copy Paste&lt;/h1&gt;&lt;p&gt;原理就是給 UITableView 一個 layer mask&lt;br&gt;重點在於圓角卡片的 Bounds 要用 &lt;strong&gt;contentSize&lt;/strong&gt; 去計算&lt;/p&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;extension&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;UITableView&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;func&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;makeContentRounded&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(radius radius: CGFloat)&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; contentBounds = &lt;span class=&quot;type&quot;&gt;CGRect&lt;/span&gt;(origin: &lt;span class=&quot;type&quot;&gt;CGPoint&lt;/span&gt;.zero, size: &lt;span class=&quot;keyword&quot;&gt;self&lt;/span&gt;.contentSize)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; rectShape = &lt;span class=&quot;type&quot;&gt;CAShapeLayer&lt;/span&gt;()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    rectShape.bounds = contentBounds&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    rectShape.position = &lt;span class=&quot;type&quot;&gt;CGPoint&lt;/span&gt;(x: &lt;span class=&quot;type&quot;&gt;CGRectGetMidX&lt;/span&gt;(contentBounds), y: &lt;span class=&quot;type&quot;&gt;CGRectGetMidY&lt;/span&gt;(contentBounds))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    rectShape.path = &lt;span class=&quot;type&quot;&gt;UIBezierPath&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      roundedRect: contentBounds,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      byRoundingCorners: &lt;span class=&quot;type&quot;&gt;UIRectCorner&lt;/span&gt;.&lt;span class=&quot;type&quot;&gt;AllCorners&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      cornerRadii: &lt;span class=&quot;type&quot;&gt;CGSize&lt;/span&gt;(width: radius, height: radius)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      ).&lt;span class=&quot;type&quot;&gt;CGPath&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;self&lt;/span&gt;.layer.mask = rectShape&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然後在適當的地方 call 這個 func 即可  &lt;/p&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;func&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;viewDidAppear&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(animated: Bool)&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;.viewDidAppear(animated)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    myTableView.makeContentRounded(radius: &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;DemoRoundedContentView&quot;&gt;&lt;a href=&quot;#DemoRoundedContentView&quot; class=&quot;headerlink&quot; title=&quot;DemoRoundedContentView&quot;&gt;&lt;/a&gt;DemoRoundedContentVi
+    
+    </summary>
+    
+      <category term="iOS 開發" scheme="http://ayo1103.com/categories/iOS-%E9%96%8B%E7%99%BC/"/>
+    
+    
+      <category term="Swift" scheme="http://ayo1103.com/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://ayo1103.com/tags/UITableView/"/>
+    
+      <category term="iOS" scheme="http://ayo1103.com/tags/iOS/"/>
+    
+  </entry>
+  
+</feed>
